@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "./components/navbar";
 
 type Props = {
   children: React.ReactNode;
@@ -6,7 +7,8 @@ type Props = {
 
 const layout = ({ children }: Props) => {
   return (
-    <div className="h-screen flex items-center justify-center bg-gradient-to-r from-fuchsia-600 to-pink-600">
+    <div className="h-screen ">
+      <Navbar />
       {children}
     </div>
   );

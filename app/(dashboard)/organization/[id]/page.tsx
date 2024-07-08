@@ -1,3 +1,4 @@
+import { OrganizationSwitcher } from "@clerk/nextjs";
 import React from "react";
 
 type Props = {
@@ -7,7 +8,11 @@ type Props = {
 };
 
 const page = ({ params: { id } }: Props) => {
-  return <div>asdasd{id}</div>;
+  return (
+    <div>
+      <OrganizationSwitcher hidePersonal />
+    </div>
+  );
 };
 
 export default page;
