@@ -9,6 +9,7 @@ import React from "react";
 import { Activity, CreditCard, Layout, Settings } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type Organization = {
   id: string;
@@ -70,6 +71,9 @@ const NavItem = ({ isActive, isExpanded, onExpand, organization }: Props) => {
               src={organization.imageUrl}
               alt="Organization"
               className="rounded-sm object-cover"
+              sizes="(min-width: 66em) 33vw,
+              (min-width: 44em) 50vw,
+              100vw"
             />
           </div>
           <span className="font-medium text-sm">{organization.name}</span>
@@ -93,6 +97,16 @@ const NavItem = ({ isActive, isExpanded, onExpand, organization }: Props) => {
         ))}
       </AccordionContent>
     </AccordionItem>
+  );
+};
+NavItem.Skeleton = function SkeletonNavItem() {
+  return (
+    <div className="flex items-center gap-x-2">
+      <div className="w-10 h-10 relative shrink-0">
+        <Skeleton className="h-full w-full absolute" />
+      </div>
+      <Skeleton className="h-10 w-full" />
+    </div>
   );
 };
 
