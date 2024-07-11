@@ -21,7 +21,7 @@ const isPublicRoute = createRouteMatcher(["/"]);
 //   }
 //   if (!auth().userId && !isPublicRoute(request)) {
 //     console.log(isPublicRoute(request));
-//     return auth().redirectToSignIn(auth().);
+//     return auth().redirectToSignIn({ returnBackUrl: request.url });
 //   }
 //   if (
 //     auth().userId &&
