@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import db from "@/lib/db";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import React from "react";
+import Board from "./board";
 
 type Props = {
   params: {
@@ -26,9 +27,9 @@ const page = async ({ params: { id } }: Props) => {
           Submit
         </Button>
       </form>
-      <div>
+      <div className="space-y-2">
         {boards.map((board) => (
-          <div key={board.id}>{board.title}</div>
+          <Board title={board.title} key={board.id} id={board.id} />
         ))}
       </div>
     </div>
