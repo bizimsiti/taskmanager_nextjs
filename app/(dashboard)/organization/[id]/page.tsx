@@ -4,6 +4,7 @@ import db from "@/lib/db";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import React from "react";
 import Board from "./board";
+import Form from "./form";
 
 type Props = {
   params: {
@@ -15,18 +16,7 @@ const page = async ({ params: { id } }: Props) => {
   const boards = await db.board.findMany();
   return (
     <div>
-      <form action={create}>
-        <input
-          className="border border-black"
-          type="text"
-          id="title"
-          name="title"
-          required
-        />
-        <Button variant="default" size="sm" type="submit">
-          Submit
-        </Button>
-      </form>
+      <Form />
       <div className="space-y-2">
         {boards.map((board) => (
           <Board title={board.title} key={board.id} id={board.id} />
