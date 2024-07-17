@@ -7,8 +7,6 @@ type Props = {
 };
 
 const FormErrors = ({ id, errors }: Props) => {
-  console.log(errors);
-
   if (!errors) {
     return null;
   }
