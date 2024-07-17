@@ -21,7 +21,11 @@ const Navbar = (props: Props) => {
         >
           Create
         </Button>
-        <Button size="sm" className="rounded-sm block md:hidden">
+        <Button
+          size="sm"
+          className="rounded-sm block md:hidden"
+          variant="primary"
+        >
           <Plus className="h-4 w-4" />
         </Button>
       </div>

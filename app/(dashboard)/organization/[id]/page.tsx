@@ -1,10 +1,7 @@
-import { create } from "@/actions/createBoard";
-import { Button } from "@/components/ui/button";
-import db from "@/lib/db";
-import { OrganizationSwitcher } from "@clerk/nextjs";
 import React from "react";
-import Board from "./board";
-import Form from "./form";
+import Info from "./components/info";
+import { Separator } from "@/components/ui/separator";
+import BoardList from "./components/boardList";
 
 type Props = {
   params: {
@@ -13,14 +10,12 @@ type Props = {
 };
 
 const page = async ({ params: { id } }: Props) => {
-  const boards = await db.board.findMany();
   return (
-    <div>
-      <Form />
-      <div className="space-y-2">
-        {boards.map((board) => (
-          <Board title={board.title} key={board.id} id={board.id} />
-        ))}
+    <div className="w-full mb-20">
+      <Info />
+      <Separator className="my-4" />
+      <div>
+        <BoardList />
       </div>
     </div>
   );
