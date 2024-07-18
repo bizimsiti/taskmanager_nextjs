@@ -18,7 +18,12 @@ type Props = {
     | "primary";
 };
 
-const FormSubmit = ({ children, className, disabled, variant }: Props) => {
+const FormSubmit = ({
+  children,
+  className,
+  disabled,
+  variant = "primary"
+}: Props) => {
   const { pending } = useFormStatus();
   return (
     <Button
