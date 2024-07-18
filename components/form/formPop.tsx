@@ -12,7 +12,7 @@ import FormInput from "./formInput";
 import FormSubmit from "./formSubmit";
 import { useAction } from "@/hooks/useAction";
 import { createBoard } from "@/actions/createBoard";
-import { useToast } from "../ui/use-toast";
+import { toast } from "sonner";
 
 type Props = {
   children: React.ReactNode;
@@ -27,22 +27,16 @@ const FormPop = ({
   side = "bottom",
   sideOffset = 0
 }: Props) => {
-  const { toast } = useToast();
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       console.log(data);
-      toast({
-        title: "Board",
-        description: "Board created !"
-      });
+
+      toast.success("Board created !");
     },
     onError: (error) => {
       console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Board",
-        description: error
-      });
+
+      toast.error(error);
     }
   });
 

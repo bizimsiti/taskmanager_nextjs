@@ -21,7 +21,7 @@ const BoardList = (props: Props) => {
             <p className="text-sm">Create new board</p>
             <span className="text-xs">5 remaining</span>
             <Hint
-              sideOffset={0}
+              sideOffset={50}
               description={`Free workspaces can have up 5 open boards. For unlimited borars upgrade this workspace`}
             >
               <HelpCircle className="absolute bottom-2 right-2 h-[14px] w-[14px]" />
