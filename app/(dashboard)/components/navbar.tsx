@@ -20,6 +20,7 @@ const Navbar = (props: Props) => {
           <Button
             size="sm"
             className="rounded-sm hidden md:block h-auto py-1.5 px-2"
+            variant="primary"
           >
             Create
           </Button>
