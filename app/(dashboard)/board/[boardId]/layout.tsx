@@ -42,7 +42,7 @@ const layout = async ({ children, params }: Props) => {
     >
       <BoardNavbar data={board} />
       <div className="absolute inset-0 bg-black/10"></div>
-      <main className="pt-28 h-screen">{children}</main>
+      <main className="relative pt-28 h-screen">{children}</main>
     </div>
   );
 };
