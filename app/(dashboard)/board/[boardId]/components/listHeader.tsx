@@ -8,6 +8,7 @@ import { startCase } from "lodash";
 import { ElementRef, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { toast } from "sonner";
+import ListOptions from "./listOptions";
 
 type Props = {
   data: List;
@@ -82,6 +83,7 @@ const ListHeader = ({ data }: Props) => {
           {startCase(title)}
         </div>
       )}
+      <ListOptions data={data} onAddCard={() => {}} />
     </div>
   );
 };
