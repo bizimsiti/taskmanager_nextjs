@@ -1,5 +1,6 @@
+"use client";
 import { ListWithCards } from "@/types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ListForm from "./listForm";
 import ListItem from "./listItem";
 
@@ -9,10 +10,14 @@ type Props = {
 };
 
 const ListContainer = ({ data, boardId }: Props) => {
+  const [orderedData, setOrderedData] = useState(data);
+  useEffect(() => {
+    setOrderedData(data);
+  }, [data]);
   return (
     <ol className="flex gap-x-3 h-full">
-      {data.map((list, index) => (
-        <ListItem index={index} data={list} key={index} />
+      {orderedData.map((list, index) => (
+        <ListItem index={index} data={list} key={list.id} />
       ))}
       <ListForm />
     </ol>

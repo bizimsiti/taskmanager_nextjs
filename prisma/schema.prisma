@@ -19,7 +19,7 @@ model Board {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  list List[]
+  lists List[]
 }
 
 model List {

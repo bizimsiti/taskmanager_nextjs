@@ -1,5 +1,6 @@
 "use client";
 
+import { copyList } from "@/actions/copyList";
 import { deleteList } from "@/actions/deleteList";
 import FormSubmit from "@/components/form/formSubmit";
 import { Button } from "@/components/ui/button";
@@ -21,9 +22,18 @@ type Props = {
 };
 
 const ListOptions = ({ data, onAddCard }: Props) => {
-  const { execute: deleteExecute, fieldErrors } = useAction(deleteList, {
+  const { execute: deleteExecute } = useAction(deleteList, {
     onSuccess(data) {
       toast.success(`"${data.title}" deleted :(`);
+    },
+    onError(error) {
+      toast.error(error);
+    }
+  });
+
+  const { execute: copyExecute } = useAction(copyList, {
+    onSuccess(data) {
+      toast.success(`"${data.title}" copied :)`);
     },
     onError(error) {
       toast.error(error);
@@ -34,6 +44,15 @@ const ListOptions = ({ data, onAddCard }: Props) => {
     const id = formData.get("id") as string;
     const boardId = formData.get("boardId") as string;
     deleteExecute({
+      id,
+      boardId
+    });
+  };
+
+  const onCopy = (formData: FormData) => {
+    const id = formData.get("id") as string;
+    const boardId = formData.get("boardId") as string;
+    copyExecute({
       id,
       boardId
     });
@@ -64,9 +83,21 @@ const ListOptions = ({ data, onAddCard }: Props) => {
         >
           add card...
         </Button>
-        <form>
-          <input hidden name="id" id="id" value={data.id} />
-          <input hidden name="boardId" id="boardId" value={data.boardId} />
+        <form action={onCopy}>
+          <input
+            hidden
+            name="id"
+            id="id"
+            value={data.id}
+            defaultValue={data.id}
+          />
+          <input
+            hidden
+            name="boardId"
+            id="boardId"
+            value={data.boardId}
+            defaultValue={data.boardId}
+          />
           <FormSubmit
             className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
             variant="ghost"
@@ -76,8 +107,20 @@ const ListOptions = ({ data, onAddCard }: Props) => {
         </form>
         <Separator />
         <form action={onDelete}>
-          <input hidden name="id" id="id" value={data.id} />
-          <input hidden name="boardId" id="boardId" value={data.boardId} />
+          <input
+            hidden
+            name="id"
+            id="id"
+            value={data.id}
+            defaultValue={data.id}
+          />
+          <input
+            hidden
+            name="boardId"
+            id="boardId"
+            value={data.boardId}
+            defaultValue={data.boardId}
+          />
           <FormSubmit
             className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm hover:bg-red-500 hover:text-white group"
             variant="ghost"
