@@ -1,6 +1,7 @@
+import FormSubmit from "@/components/form/formSubmit";
 import FormTextArea from "@/components/form/formTextarea";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import React, { forwardRef } from "react";
 
 type Props = {
@@ -21,6 +22,23 @@ const CardForm = forwardRef<HTMLTextAreaElement, Props>(
             ref={ref}
             placeholder="Enter a title for this card..."
           />
+          <input
+            hidden
+            id="listId"
+            name="listId"
+            value={listId}
+            defaultValue={listId}
+          />
+          <div className="flex items-center gap-x-1">
+            <FormSubmit>Add card</FormSubmit>
+            <Button
+              onClick={disableEditing}
+              size={"sm"}
+              variant={"destructive"}
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
         </form>
       );
     }
