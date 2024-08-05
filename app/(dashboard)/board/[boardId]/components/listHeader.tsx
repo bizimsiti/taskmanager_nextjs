@@ -12,9 +12,10 @@ import ListOptions from "./listOptions";
 
 type Props = {
   data: List;
+  onAddCard: () => void;
 };
 
-const ListHeader = ({ data }: Props) => {
+const ListHeader = ({ data, onAddCard }: Props) => {
   const [title, setTitle] = useState(data.title);
   const [isEditing, setIsEditing] = useState(false);
   const formRef = useRef<ElementRef<"form">>(null);
@@ -83,7 +84,7 @@ const ListHeader = ({ data }: Props) => {
           {startCase(title)}
         </div>
       )}
-      <ListOptions data={data} onAddCard={() => {}} />
+      <ListOptions data={data} onAddCard={onAddCard} />
     </div>
   );
 };

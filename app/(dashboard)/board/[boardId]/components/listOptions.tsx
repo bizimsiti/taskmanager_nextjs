@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { useAction } from "@/hooks/useAction";
 import { List } from "@prisma/client";
 import { MoreHorizontal, X } from "lucide-react";
+import { ElementRef, useRef } from "react";
 import { toast } from "sonner";
 
 type Props = {
@@ -22,9 +23,11 @@ type Props = {
 };
 
 const ListOptions = ({ data, onAddCard }: Props) => {
+  const closeRef = useRef<ElementRef<"button">>(null);
   const { execute: deleteExecute } = useAction(deleteList, {
     onSuccess(data) {
       toast.success(`"${data.title}" deleted :(`);
+      closeRef.current?.click();
     },
     onError(error) {
       toast.error(error);
@@ -34,6 +37,7 @@ const ListOptions = ({ data, onAddCard }: Props) => {
   const { execute: copyExecute } = useAction(copyList, {
     onSuccess(data) {
       toast.success(`"${data.title}" copied :)`);
+      closeRef.current?.click();
     },
     onError(error) {
       toast.error(error);
@@ -68,7 +72,7 @@ const ListOptions = ({ data, onAddCard }: Props) => {
         <div className="text-sm font-medium text-center text-neutal-600 pb-4">
           List actions
         </div>
-        <PopoverClose asChild>
+        <PopoverClose ref={closeRef} asChild>
           <Button
             className="h-auto w-auto p-2 top-2 right-2  absolute"
             variant="destructive"
