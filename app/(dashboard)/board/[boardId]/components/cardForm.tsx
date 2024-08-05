@@ -1,26 +1,86 @@
+"use client";
+import { createCard } from "@/actions/createCard";
 import FormSubmit from "@/components/form/formSubmit";
 import FormTextArea from "@/components/form/formTextarea";
 import { Button } from "@/components/ui/button";
+import { useAction } from "@/hooks/useAction";
 import { Plus, X } from "lucide-react";
-import React, { forwardRef } from "react";
+import { useParams } from "next/navigation";
+import React, {
+  ElementRef,
+  forwardRef,
+  KeyboardEventHandler,
+  useRef
+} from "react";
+import { toast } from "sonner";
+import { useEventListener, useOnClickOutside } from "usehooks-ts";
 
 type Props = {
   listId: string;
+  boardId: string;
   isEditing: boolean;
   enableEditing: () => void;
   disableEditing: () => void;
 };
 
 const CardForm = forwardRef<HTMLTextAreaElement, Props>(
-  ({ listId, isEditing, disableEditing, enableEditing }, ref) => {
+  ({ listId, boardId, isEditing, disableEditing, enableEditing }, ref) => {
+    const params = useParams();
+    const formRef = useRef<ElementRef<"form">>(null);
+    const { execute, fieldErrors } = useAction(createCard, {
+      onSuccess(data) {
+        toast.success(`Card "${data.title} created :)"`);
+        formRef.current?.reset();
+      },
+      onError(error) {
+        toast.error(error);
+        formRef.current?.reset();
+      }
+    });
+
+    const onTextareakeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (
+      e
+    ) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        formRef.current?.requestSubmit();
+      }
+    };
+
+    const onSubmit = (formData: FormData) => {
+      const title = formData.get("title") as string;
+      const listId = formData.get("listId") as string;
+      const boardId = formData.get("boardId") as string;
+
+      execute({
+        title,
+        boardId,
+        listId
+      });
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        disableEditing();
+      }
+    };
+
+    useOnClickOutside(formRef, disableEditing);
+    useEventListener("keydown", onKeyDown);
+
     if (isEditing) {
       return (
-        <form className="m-1 py-0.5 px-1 space-y-4">
+        <form
+          ref={formRef}
+          action={onSubmit}
+          className="m-1 py-0.5 px-1 space-y-4"
+        >
           <FormTextArea
             id={"title"}
-            onKeyDown={() => {}}
+            onKeyDown={onTextareakeyDown}
             ref={ref}
             placeholder="Enter a title for this card..."
+            errors={fieldErrors}
           />
           <input
             hidden
@@ -28,6 +88,13 @@ const CardForm = forwardRef<HTMLTextAreaElement, Props>(
             name="listId"
             value={listId}
             defaultValue={listId}
+          />
+          <input
+            hidden
+            id="boardId"
+            name="boardId"
+            value={boardId}
+            defaultValue={boardId}
           />
           <div className="flex items-center gap-x-1">
             <FormSubmit>Add card</FormSubmit>
