@@ -15,6 +15,7 @@ import { createBoard } from "@/actions/createBoard";
 import { toast } from "sonner";
 import FormPicker from "./formPicker";
 import { useRouter } from "next/navigation";
+import { useProModal } from "@/hooks/useProModal";
 
 type Props = {
   children: React.ReactNode;
@@ -29,6 +30,7 @@ const FormPop = ({
   side = "bottom",
   sideOffset = 0
 }: Props) => {
+  const proModal = useProModal();
   const closeRef = useRef<ElementRef<"button">>(null);
   const router = useRouter();
   const { execute, fieldErrors } = useAction(createBoard, {
@@ -40,7 +42,7 @@ const FormPop = ({
     },
     onError: (error) => {
       console.log(error);
-
+      proModal.onOpen();
       toast.error(error);
     }
   });

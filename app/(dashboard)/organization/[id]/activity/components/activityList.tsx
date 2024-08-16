@@ -36,9 +36,9 @@ ActivityList.Skeleton = function ActivityListSkeleton() {
     <ol className="space-y-4 mt-4">
       <Skeleton className="w-[80%] h-14" />
       <Skeleton className="w-[70%] h-14" />
-      <Skeleton className="w-[100%] h-14" />
+      <Skeleton className="w-[90%] h-14" />
       <Skeleton className="w-[50%] h-14" />
-      <Skeleton className="w-[700%] h-14" />
+      <Skeleton className="w-[70%] h-14" />
       <Skeleton className="w-[80%] h-14" />
     </ol>
   );
