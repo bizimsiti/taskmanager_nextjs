@@ -8,12 +8,19 @@ import { createSafeAction } from "@/lib/createSafeAction";
 import { CreateBoard } from "./schema";
 import { createAuditLog } from "@/lib/create-audit-log";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
+import { hasAvaibleCount, incrementAvaibleCount } from "@/lib/orgLimit";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
   if (!userId || !orgId) {
     return {
       error: "Unauthorized"
+    };
+  }
+  const canCreate = await hasAvaibleCount();
+  if (!canCreate) {
+    return {
+      error: "You have reached your limit. Please upgrade your account!"
     };
   }
   const { title, image } = data;
@@ -45,6 +52,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         imageUserName
       }
     });
+    await incrementAvaibleCount();
     await createAuditLog({
       entityId: board.id,
       entityTitle: board.title,

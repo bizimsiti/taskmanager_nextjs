@@ -7,6 +7,8 @@ import { redirect } from "next/navigation";
 import db from "@/lib/db";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getAvaibleCount } from "@/lib/orgLimit";
+import { MAX_FREE_BOARDS } from "@/constants/boards";
 type Props = {};
 
 const BoardList = async (props: Props) => {
@@ -23,6 +25,8 @@ const BoardList = async (props: Props) => {
       createdAt: "desc"
     }
   });
+
+  const avaibleCount = await getAvaibleCount();
 
   return (
     <div className="space-y-4">
@@ -48,7 +52,9 @@ const BoardList = async (props: Props) => {
             className="aspect-video relative h-full w-full bg-muted rounded-sm flex items-center flex-col justify-center gap-y-1 hover:opacity-75 transition"
           >
             <p className="text-sm">Create new board</p>
-            <span className="text-xs">5 remaining</span>
+            <span className="text-xs">{`${
+              MAX_FREE_BOARDS - avaibleCount
+            } remaining`}</span>
             <Hint
               sideOffset={50}
               description={`Free workspaces can have up 5 open boards. For unlimited borars upgrade this workspace`}
