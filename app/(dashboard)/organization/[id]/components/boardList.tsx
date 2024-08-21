@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getAvaibleCount } from "@/lib/orgLimit";
 import { MAX_FREE_BOARDS } from "@/constants/boards";
+import { checkSubscription } from "@/lib/subscription";
 type Props = {};
 
 const BoardList = async (props: Props) => {
@@ -27,6 +28,7 @@ const BoardList = async (props: Props) => {
   });
 
   const avaibleCount = await getAvaibleCount();
+  const isPro = await checkSubscription();
 
   return (
     <div className="space-y-4">
@@ -52,9 +54,11 @@ const BoardList = async (props: Props) => {
             className="aspect-video relative h-full w-full bg-muted rounded-sm flex items-center flex-col justify-center gap-y-1 hover:opacity-75 transition"
           >
             <p className="text-sm">Create new board</p>
-            <span className="text-xs">{`${
-              MAX_FREE_BOARDS - avaibleCount
-            } remaining`}</span>
+            <span className="text-xs">
+              {isPro
+                ? "Unlimited"
+                : `${MAX_FREE_BOARDS - avaibleCount} remaining`}
+            </span>
             <Hint
               sideOffset={50}
               description={`Free workspaces can have up 5 open boards. For unlimited borars upgrade this workspace`}

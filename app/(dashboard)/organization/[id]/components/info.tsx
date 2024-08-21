@@ -5,9 +5,11 @@ import { CreditCard } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-type Props = {};
+type Props = {
+  isPro: boolean;
+};
 
-const Info = (props: Props) => {
+const Info = ({ isPro }: Props) => {
   const { organization, isLoaded } = useOrganization();
   if (!isLoaded) {
     return <Info.Skeleton />;
@@ -26,7 +28,7 @@ const Info = (props: Props) => {
         <p className="font-semibold text-xl">{organization?.name}</p>
         <div className="flex items-center text-xs text-muted-foreground">
           <CreditCard className="h-3 w-3 mr-1" />
-          Free
+          {isPro ? "Pro" : "Free"}
         </div>
       </div>
     </div>

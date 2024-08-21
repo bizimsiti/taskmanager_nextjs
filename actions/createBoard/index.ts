@@ -9,6 +9,7 @@ import { CreateBoard } from "./schema";
 import { createAuditLog } from "@/lib/create-audit-log";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
 import { hasAvaibleCount, incrementAvaibleCount } from "@/lib/orgLimit";
+import { checkSubscription } from "@/lib/subscription";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -18,7 +19,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
   const canCreate = await hasAvaibleCount();
-  if (!canCreate) {
+  const isPro = await checkSubscription();
+  if (!canCreate && !isPro) {
     return {
       error: "You have reached your limit. Please upgrade your account!"
     };
@@ -52,7 +54,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         imageUserName
       }
     });
-    await incrementAvaibleCount();
+
+    if (!isPro) {
+      await incrementAvaibleCount();
+    }
+
     await createAuditLog({
       entityId: board.id,
       entityTitle: board.title,
