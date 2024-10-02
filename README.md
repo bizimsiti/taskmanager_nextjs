@@ -1,5 +1,10 @@
 In this project you can simply create account with Google. You can create boards and cards. You can pick up and drop cards and boards, arrange them in order, and change their positions. All these actions are saved to the database. You can set up a subscription to your account using Stripe and experience both the limited and pro versions.
 
+![](https://github.com/bizimsiti/taskmanager_nextjs/blob/main/upgrade.gif)
+![](https://github.com/bizimsiti/taskmanager_nextjs/blob/main/card%20actions.gif)
+
+
+
 # Tech Stack
 <a href="#"><img src="https://github.com/onemarc/tech-icons/blob/main/icons/nextjs-light.svg" width="50"></a>
 <a href="#"><img src="https://github.com/onemarc/tech-icons/blob/main/icons/mongodb-light.svg" width="50"></a>
